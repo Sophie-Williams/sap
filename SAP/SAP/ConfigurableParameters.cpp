@@ -6,7 +6,6 @@
 ConfigurableParameters::ConfigurableParameters()
 {
 	PlayerAgent_Radius = 3;
-	PlayerAgent_Speed = 3;
 	PlayerAgent_HealthPoints = 10;
 	PlayerAgent_MovementaPoints = 30;
 	PlayerAgent_Weapon = WeaponIndentifier::None;

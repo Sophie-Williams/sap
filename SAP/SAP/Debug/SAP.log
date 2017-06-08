@@ -1,3 +1,18 @@
-﻿  GameSimulator.cpp
+﻿  PlayerAgent.cpp
+  GameSimulator.cpp
+  Generating Code...
+  Compiling...
+  Test_AgentLogic.cpp
+  MissileLaunch.cpp
+  GameStateAdapter.cpp
+  GameState.cpp
+  Generating Code...
+c:\users\unique\documents\visual studio 2015\projects\sap\sap\test_agentlogic.cpp(91): warning C4715: 'Test_AgentLogic::getAction': not all control paths return a value
+  Skipping... (no relevant changes detected)
+  Rotate.cpp
+  OrbitalMissileLaunch.cpp
+  OrbitalMissile.cpp
+  Move.cpp
+  Main.cpp
   SAP.vcxproj -> C:\Users\Unique\Documents\Visual Studio 2015\Projects\SAP\Debug\SAP.exe
   SAP.vcxproj -> C:\Users\Unique\Documents\Visual Studio 2015\Projects\SAP\Debug\SAP.pdb (Partial PDB)

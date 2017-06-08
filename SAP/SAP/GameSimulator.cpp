@@ -108,13 +108,12 @@ void GameSimulator::generatePlayers()
 	//
 	Point2D p1_Spawn = this->randomLocation(_parameters.World_PlayerSpawn_MinDistanceToCenter, _parameters.World_PlayerSpawn_MaxDistanceToCenter);
 	Orientation p1_Orientation = Orientation::E;
-	unsigned int p1_Speed = _parameters.PlayerAgent_Speed;
 	unsigned int p1_Radius = _parameters.PlayerAgent_Radius;
 	unsigned int p1_HealthPoints = _parameters.PlayerAgent_HealthPoints;
 	unsigned int p1_MovementPoints = _parameters.PlayerAgent_MovementaPoints;
 	WeaponIndentifier p1_Weapon = _parameters.PlayerAgent_Weapon;
 
-	_game.Player1 = PlayerAgent(p1_Spawn, p1_Orientation, p1_Speed, p1_Radius, p1_MovementPoints, p1_HealthPoints, p1_Weapon);
+	_game.Player1 = PlayerAgent(p1_Spawn, p1_Orientation, p1_Radius, p1_MovementPoints, p1_HealthPoints, p1_Weapon);
 
 	std::cout << "Player1 created." << std::endl;
 
@@ -123,13 +122,12 @@ void GameSimulator::generatePlayers()
 	//
 	Point2D p2_Spawn = p1_Spawn * Point2D(-1, -1);
 	Orientation p2_Orientation = Orientation::W;
-	unsigned int p2_Speed = _parameters.PlayerAgent_Speed;
 	unsigned int p2_Radius = _parameters.PlayerAgent_Radius;
 	unsigned int p2_HealthPoints = _parameters.PlayerAgent_HealthPoints;
 	unsigned int p2_MovementPoints = _parameters.PlayerAgent_MovementaPoints;
 	WeaponIndentifier p2_Weapon = _parameters.PlayerAgent_Weapon;
 
-	_game.Player2 = PlayerAgent(p2_Spawn, p2_Orientation, p2_Speed, p2_Radius, p2_MovementPoints, p2_HealthPoints, p2_Weapon);
+	_game.Player2 = PlayerAgent(p2_Spawn, p2_Orientation, p2_Radius, p2_MovementPoints, p2_HealthPoints, p2_Weapon);
 
 	std::cout << "Player2 created." << std::endl;
 }

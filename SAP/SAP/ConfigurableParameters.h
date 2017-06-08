@@ -8,7 +8,6 @@ struct ConfigurableParameters
 	~ConfigurableParameters();
 
 	unsigned int PlayerAgent_Radius;
-	unsigned int PlayerAgent_Speed;
 	unsigned int PlayerAgent_HealthPoints;
 	unsigned int PlayerAgent_MovementaPoints;
 	WeaponIndentifier PlayerAgent_Weapon;

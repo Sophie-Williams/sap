@@ -11,10 +11,9 @@ class PlayerAgent :
 public:
 
 	explicit PlayerAgent();
-	explicit PlayerAgent(const int x, const int y, const Orientation orientation, const unsigned int speed,
-		const unsigned int radius, const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon);
-	explicit PlayerAgent(const Point2D point, const Orientation orientation, const unsigned int speed,
-		const unsigned int radius, const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon);
+	explicit PlayerAgent(const int x, const int y, const Orientation orientation, const unsigned int radius, 
+		const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon);
+	explicit PlayerAgent(const Point2D point, const Orientation orientation, const unsigned int radius,const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon);
 	~PlayerAgent();
 
 	void commitedSuicide();

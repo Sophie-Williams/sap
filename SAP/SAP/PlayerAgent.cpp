@@ -7,10 +7,10 @@ PlayerAgent::PlayerAgent()
 }
 
 
-PlayerAgent::PlayerAgent(const int x, const int y, const Orientation orientation, const unsigned int speed,
-	const unsigned int radius, const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon)
+PlayerAgent::PlayerAgent(const int x, const int y, const Orientation orientation, const unsigned int radius, 
+	const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon)
 {
-	_objectSpeed = speed;
+	_objectSpeed = 0;
 	_objectRadius = radius;
 
 	_point = Point2D(x, y);
@@ -23,10 +23,10 @@ PlayerAgent::PlayerAgent(const int x, const int y, const Orientation orientation
 }
 
 
-PlayerAgent::PlayerAgent(const Point2D point, const Orientation orientation, const unsigned int speed,
-	const unsigned int radius, const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon)
+PlayerAgent::PlayerAgent(const Point2D point, const Orientation orientation, const unsigned int radius, 
+	const unsigned int movePoints, const unsigned int healthPoints, const WeaponIndentifier weapon)
 {
-	_objectSpeed = speed;
+	_objectSpeed = 0;
 	_objectRadius = radius;
 
 	_point = point;
