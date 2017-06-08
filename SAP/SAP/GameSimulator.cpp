@@ -59,10 +59,10 @@ Point2D GameSimulator::randomLocation(unsigned int minDistance, unsigned int max
 	std::uniform_int_distribution<int> uniformPRandomNumberGenerator_X(0, maxDistance);
 	int x = uniformPRandomNumberGenerator_X(_randomNumberEngine) * -1;
 	
-	double result = double(minDistance * minDistance) - double(x * x);
+	double result = static_cast<double> (minDistance * minDistance) - static_cast<double> (x * x);
 	int minY = result < 0 ? 0 : static_cast<int> (std::ceil(std::sqrt(result)));
 
-	result = double(maxDistance * maxDistance) - double(x * x);
+	result = static_cast<double> (maxDistance * maxDistance) - static_cast<double> (x * x);
 	int maxY = static_cast<int> (std::floor(std::sqrt(result)));
 
 	if (minY < maxY)

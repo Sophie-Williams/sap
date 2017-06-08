@@ -8,19 +8,19 @@ MovableObject::MovableObject()
 }
 
 
-MovableObject::MovableObject(const int x, const int y, const Orientation orientation, const unsigned int speed, const unsigned int radius)
+MovableObject::MovableObject(const int x, const int y, const Orientation orientation, const unsigned int radius)
 {
 	_objectRadius = radius;
-	_objectSpeed = speed;
+
 	_point = Point2D(x, y);
 	_orientation = orientation;
 }
 
 
-MovableObject::MovableObject(const Point2D point, const Orientation orientation, const unsigned int speed, const unsigned int radius)
+MovableObject::MovableObject(const Point2D point, const Orientation orientation, const unsigned int radius)
 {
 	_objectRadius = radius;
-	_objectSpeed = speed;
+
 	_point = point;
 	_orientation = orientation;
 }
@@ -40,12 +40,6 @@ Point2D MovableObject::getLocation() const
 Orientation MovableObject::getOrientation() const
 {
 	return _orientation;
-}
-
-
-unsigned int MovableObject::getSpeed() const
-{
-	return _objectSpeed;
 }
 
 

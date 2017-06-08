@@ -40,7 +40,7 @@ void MissileLaunch::executeAction(GameState& game, bool isPlayer1)
 			Point2D offset = Point2D::orientationToPoint(this->_direction) * (game.Player1.getRadius() + game.config_ptr->Missile_Radius);
 			Point2D spawnLocation = Point2D(game.Player1.getLocation() + offset);
 
-			MovableObject newMissile = MovableObject(spawnLocation, _direction, game.config_ptr->Missile_Speed, game.config_ptr->Missile_Radius);
+			MovableObject newMissile = MovableObject(spawnLocation, _direction, game.config_ptr->Missile_Radius);
 			game.Player1.setWeapon(WeaponIndentifier::None);
 
 			bool isDestroyed = this->checkMissileCollisions(newMissile, game);
@@ -63,7 +63,7 @@ void MissileLaunch::executeAction(GameState& game, bool isPlayer1)
 			Point2D offset = Point2D::orientationToPoint(this->_direction) * (game.Player2.getRadius() + game.config_ptr->Missile_Radius);
 			Point2D spawnLocation = Point2D(game.Player2.getLocation() + offset);
 
-			MovableObject newMissile = MovableObject(spawnLocation, _direction, game.config_ptr->Missile_Speed, game.config_ptr->Missile_Radius);
+			MovableObject newMissile = MovableObject(spawnLocation, _direction, game.config_ptr->Missile_Radius);
 			game.Player2.setWeapon(WeaponIndentifier::None);
 
 			bool isDestroyed = this->checkMissileCollisions(newMissile, game);

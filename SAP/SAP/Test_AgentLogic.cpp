@@ -88,6 +88,7 @@ Action* Test_AgentLogic::getAction()
 		}
 		
 	}
+	Rotate(player.getOrientation());
 }
 
 
