@@ -10,15 +10,6 @@ GameSimulator::GameSimulator(const ConfigurableParameters config, AgentControlle
 
 	_player1Controller = player1;
 	_player2Controller = player2;
-
-	//	bind controllers to current GameState 
-	GameStateAdapter gsAdapter;
-	gsAdapter.bind(this->_game, false);
-	//		Player1 
-	_player1Controller->bindToGSAdapter(gsAdapter);
-	//		Player2	
-	gsAdapter.bind(this->_game, true);
-	_player1Controller->bindToGSAdapter(gsAdapter);
 	
 	//	Generating starting world
 	std::cout << "Creating new game world..." << std::endl;
@@ -41,6 +32,15 @@ GameSimulator::GameSimulator(const ConfigurableParameters config, AgentControlle
 	std::cout << "Generating resources..." << std::endl;
 	this->generateStartingResources();
 
+	//	bind controllers to current GameState 
+	GameStateAdapter gsAdapter;
+	gsAdapter.bind(this->_game, false);
+	//		Player1 
+	_player1Controller->bindToGSAdapter(gsAdapter);
+	//		Player2	
+	gsAdapter.bind(this->_game, true);
+	_player2Controller->bindToGSAdapter(gsAdapter);
+
 	std::cout << "New game world has been created." << std::endl;
 }
 
@@ -59,10 +59,10 @@ Point2D GameSimulator::randomLocation(unsigned int minDistance, unsigned int max
 	std::uniform_int_distribution<int> uniformPRandomNumberGenerator_X(0, maxDistance);
 	int x = uniformPRandomNumberGenerator_X(_randomNumberEngine) * -1;
 	
-	double result = minDistance * minDistance - x * x;
+	double result = double(minDistance * minDistance) - double(x * x);
 	int minY = result < 0 ? 0 : static_cast<int> (std::ceil(std::sqrt(result)));
 
-	result = maxDistance * maxDistance - x * x;
+	result = double(maxDistance * maxDistance) - double(x * x);
 	int maxY = static_cast<int> (std::floor(std::sqrt(result)));
 
 	if (minY < maxY)
@@ -161,10 +161,10 @@ void GameSimulator::generateStartingResources()
 	}
 	while (_game.ResourceMap.size() < _parameters.World_GenerateResourcesAtStart)
 	{
-		Point2D newPoint = this->randomLocation(0, _game.Radius - _game.Player1.getRadius());
+		Point2D newPoint = this->randomLocation(1, _game.Radius);
 		
 		while (_game.ResourceMap.find(newPoint) != _game.ResourceMap.end()) {
-			newPoint = this->randomLocation(0, _game.Radius - _game.Player1.getRadius());
+			newPoint = this->randomLocation(1, _game.Radius);
 		}
 		
 		if (newPoint != _game.Player1.getLocation()) {
@@ -201,7 +201,7 @@ void GameSimulator::generateResources(unsigned int count)
 
 	for (unsigned int created = 0; created < count; )
 	{
-		Point2D newPoint = this->randomLocation(0, _game.Radius - _game.Player1.getRadius());
+		Point2D newPoint = this->randomLocation(0, _game.Radius);
 		
 		if (xIsPositiveGenerator(_randomNumberEngine)) {
 			newPoint.X *= -1;
@@ -224,17 +224,17 @@ void GameSimulator::startTurn()
 	if (_game.Turn % _parameters.World_TurnsTillDecrease == 0) {
 		_game.Radius -= _parameters.World_RadiusDecrease;
 
-		std::cout << "Play area decreased to " << _game.Radius << "." << std::endl;
+		std::cout << ">> Play area decreased to " << _game.Radius << "." << std::endl;
 
 		if (_game.Player1.getLocation().distanceToPoint(Point2D()) > _game.Radius) {
 			_game.Player1.commitedSuicide();
 
-			std::cout << "Player1 dies outside play area." << std::endl;
+			std::cout << " -- Player1 dies outside play area." << std::endl;
 		}
 		if (_game.Player2.getLocation().distanceToPoint(Point2D()) > _game.Radius) {
 			_game.Player2.commitedSuicide();
 
-			std::cout << "Player2 dies outside play area." << std::endl;
+			std::cout << " -- Player2 dies outside play area." << std::endl;
 		}
 	}
 
@@ -264,6 +264,8 @@ void GameSimulator::collectResources()
 				_game.Player1.setWeapon(WeaponIndentifier::OrbitalMissile);
 			}
 		}
+
+		_game.ResourceMap.erase(_game.Player1.getLocation());
 	}
 
 	resource = _game.ResourceMap.find(_game.Player2.getLocation());
@@ -281,6 +283,8 @@ void GameSimulator::collectResources()
 				_game.Player2.setWeapon(WeaponIndentifier::OrbitalMissile);
 			}
 		}
+		
+		_game.ResourceMap.erase(_game.Player2.getLocation());
 	}
 }
 
@@ -304,7 +308,7 @@ void GameSimulator::simulateTurn()
 		std::chrono::duration<double, std::milli> timerDiff = stopTimer - startTimer;
 		
 		//	do action if action didnt take more then max response time
-		if (timerDiff <= _parameters.Algorithm_ResponseTime) {
+		if (timerDiff <= _parameters.Algorithm_ResponseTime || true) {
 			player1_Action->executeAction(_game, true);
 		}
 
@@ -321,7 +325,7 @@ void GameSimulator::simulateTurn()
 		std::chrono::duration<double, std::milli> timerDiff = stopTimer - startTimer;
 
 		//	do action if action didnt take more then max response time
-		if (timerDiff <= _parameters.Algorithm_ResponseTime) {
+		if (timerDiff <= _parameters.Algorithm_ResponseTime || true) {
 			player2_Action->executeAction(_game, false);
 		}
 
@@ -334,25 +338,27 @@ void GameSimulator::simulateTurn()
 	//	orbital missiles advance
 	_game.advanceOrbitalMissiles();
 
-	std::cout << "Player1" << _game.Player1.getLocation() << " " << _game.Player1.movementPoints << std::endl;
-	std::cout << "Player2" << _game.Player2.getLocation() << " " << _game.Player2.movementPoints << std::endl;
 }
 
 
 void GameSimulator::play()
 {
+	std::cout << "--------------------------------------------" << std::endl;
 	while (_game.Player1.isAlive() && _game.Player2.isAlive())
 	{
 		simulateTurn();
 	}
 
+
+	std::cout << "--------------------------------------------" << std::endl;
+
 	if (_game.Player1.isAlive()) {
-		std::cout << "Player1 won the game!" << std::endl;
+		std::cout << " << Player1 won the game! >>" << std::endl;
 	}
 	else if (_game.Player2.isAlive()) {
-		std::cout << "Player2 won the game!" << std::endl;
+		std::cout << " << Player2 won the game! >>" << std::endl;
 	}
 	else {
-		std::cout << "It's a draw!" << std::endl;
+		std::cout << " << It's a draw! >>" << std::endl;
 	}
 }

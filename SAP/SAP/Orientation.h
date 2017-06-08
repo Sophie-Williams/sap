@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 enum class Orientation
 {
@@ -11,3 +12,5 @@ enum class Orientation
 	W,	// west
 	NW	// northwest
 };
+
+std::ostream& operator<<(std::ostream& out, const Orientation& orientation);

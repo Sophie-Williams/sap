@@ -19,7 +19,7 @@ public:
 	explicit GameStateAdapter();
 	~GameStateAdapter();
 
-	void bind(GameState game, bool player2);
+	void bind(GameState &game, bool player2);
 
 	GameState getGameState() const;
 	PlayerAgent getPlayer1() const;

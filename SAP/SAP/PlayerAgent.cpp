@@ -99,3 +99,15 @@ unsigned int PlayerAgent::health() const
 {
 	return _healthPoints;
 }
+
+
+std::ostream& operator<<(std::ostream& out, PlayerAgent& player)
+{
+	out << "Location: " << player.getLocation() << "\n";
+	out << "Orientation: " << player.getOrientation() << "\n";
+	out << "Health: " << player.health() << "\n";
+	out << "MovePts: " << player.movementPoints << "\n";
+	out << "Weapon: " << player.weapon() << "\n";
+	
+	return out;
+}

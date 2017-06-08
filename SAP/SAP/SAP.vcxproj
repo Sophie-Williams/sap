@@ -142,10 +142,12 @@
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="OrbitalMissile.cpp" />
     <ClCompile Include="OrbitalMissileLaunch.cpp" />
+    <ClCompile Include="Orientation.cpp" />
     <ClCompile Include="PlayerAgent.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Test_AgentLogic.cpp" />
+    <ClCompile Include="WeaponIndentifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAP.rc" />

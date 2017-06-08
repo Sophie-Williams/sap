@@ -28,6 +28,6 @@ struct GameState
 	const ConfigurableParameters* config_ptr;
 
 private:
-	void movePlayer(PlayerAgent& player);
+	void movePlayer(PlayerAgent& player, int playerIndentifier);
 };
 

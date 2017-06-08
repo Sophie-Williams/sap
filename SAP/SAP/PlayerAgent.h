@@ -32,3 +32,4 @@ public:
 	unsigned int movementPoints;
 };
 
+std::ostream& operator<<(std::ostream& out, PlayerAgent& player);

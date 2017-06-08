@@ -47,6 +47,7 @@ void MissileLaunch::executeAction(GameState& game, bool isPlayer1)
 
 			if (newMissile.collision(&(game.Player2))) {
 				game.Player2.inflictDamage();
+				std::cout << " -- Player2 got hit by missile. Health:" << game.Player2.health() << std::endl;
 				isDestroyed = true;
 			}
 
@@ -69,6 +70,7 @@ void MissileLaunch::executeAction(GameState& game, bool isPlayer1)
 
 			if (newMissile.collision(&(game.Player1))) {
 				game.Player1.inflictDamage();
+				std::cout << " -- Player1 got hit by missile. Health:" << game.Player1.health() << std::endl;
 				isDestroyed = true;
 			}
 

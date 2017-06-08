@@ -13,7 +13,7 @@ GameStateAdapter::~GameStateAdapter()
 }
 
 
-void GameStateAdapter::bind(GameState game, bool player2)
+void GameStateAdapter::bind(GameState &game, bool player2)
 {
 	_config_ptr = game.config_ptr;
 	_radius = &game.Radius;
@@ -53,38 +53,31 @@ GameState GameStateAdapter::getGameState() const
 
 PlayerAgent GameStateAdapter::getPlayer1() const
 {
-	PlayerAgent newPlayerAgent;
-	newPlayerAgent = *_player1;
-	return newPlayerAgent;
+	return *_player1;
 }
 
 
 PlayerAgent GameStateAdapter::getPlayer2() const
 {
-	PlayerAgent newPlayerAgent;
-	newPlayerAgent = *_player2;
-	return newPlayerAgent;
+	return *_player2;
 }
 
 
 std::map<Point2D, ResourceIndentifier> GameStateAdapter::getResourceMap() const
 {
-	std::map<Point2D, ResourceIndentifier> newMap = *_resourceMap;
-	return newMap;
+	return *_resourceMap;
 }
 
 
 std::list<MovableObject> GameStateAdapter::getMissileList() const
 {
-	std::list<MovableObject> newList = *_missileList;
-	return newList;
+	return *_missileList;
 }
 
 
 std::list<OrbitalMissile> GameStateAdapter::getOrbitalMissileList() const
 {
-	std::list<OrbitalMissile> newList = *_orbitalMissileList;
-	return newList;
+	return *_orbitalMissileList;
 }
 
 

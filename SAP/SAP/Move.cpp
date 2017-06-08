@@ -82,6 +82,7 @@ void Move::executeAction(GameState& game, bool isPlayer1)
 
 				if (game.Player1.getLocation().distanceToPoint(Point2D()) > game.Radius) {
 					game.Player1.commitedSuicide();
+					std::cout << " -- Player1 dies outside play area." << std::endl;
 				}
 			}
 		}
@@ -99,6 +100,7 @@ void Move::executeAction(GameState& game, bool isPlayer1)
 
 				if (game.Player2.getLocation().distanceToPoint(Point2D()) > game.Radius) {
 					game.Player2.commitedSuicide();
+					std::cout << " -- Player2 dies outside play area." << std::endl;
 				}
 			}
 		}
