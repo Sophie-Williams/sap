@@ -15,6 +15,8 @@ public:
 	bool turnEnded();	// returns true if missile is going to hit targeted location at the end of this turn
 	bool didHit(PlayerAgent player) const;	// returns true if player was hit
 
+	Point2D getTarget() const;
+
 	~OrbitalMissile();
 };
 

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <thread>
 
 
 GameSimulator::GameSimulator(const ConfigurableParameters config, AgentController* player1, AgentController* player2)
@@ -23,8 +24,9 @@ GameSimulator::GameSimulator(const ConfigurableParameters config, AgentControlle
 
 	_resourceGenerator = std::discrete_distribution<int>({ gasSpawnChance, missileSpawnChance, orbitalMissileSpawnChance });
 
+	_game.IsDone = false;
+	_game.Turn = 0; 
 	_game.Radius = _parameters.World_Radius;
-	_game.Turn = 0;
 	_game.config_ptr = &_parameters;
 
 	std::cout << "Generating new players..." << std::endl;
@@ -217,12 +219,12 @@ void GameSimulator::generateResources(unsigned int count)
 void GameSimulator::startTurn()
 {
 	//	new turn
-	std::cout << "Turn: " << ++_game.Turn << std::endl;
+	std::cout << " Turn(" << ++_game.Turn << ")" << std::endl;
 
 	if (_game.Turn % _parameters.World_TurnsTillDecrease == 0) {
 		_game.Radius -= _parameters.World_RadiusDecrease;
 
-		std::cout << ">> Play area decreased to " << _game.Radius << "." << std::endl;
+		std::cout << " >> Play area decreased to " << _game.Radius << "." << std::endl;
 
 		if (_game.Player1.getLocation().distanceToPoint(Point2D()) > _game.Radius) {
 			_game.Player1.commitedSuicide();
@@ -234,6 +236,19 @@ void GameSimulator::startTurn()
 
 			std::cout << " -- Player2 dies outside play area." << std::endl;
 		}
+
+		Point2D center = Point2D();
+		for (auto it = _game.ResourceMap.begin(); it != _game.ResourceMap.end();)
+		{
+			if (it->first.distanceToPoint(center) > _game.Radius) {
+				it = _game.ResourceMap.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+
 	}
 
 	if (_game.Turn > 1) {
@@ -289,6 +304,7 @@ void GameSimulator::collectResources()
 
 void GameSimulator::simulateTurn()
 {
+	
 	//	new turn
 	this->startTurn();
 
@@ -312,7 +328,6 @@ void GameSimulator::simulateTurn()
 
 		delete player1_Action;
 	}
-
 	//		Player2
 	if (_game.Player2.isAlive()) {
 		auto startTimer = std::chrono::high_resolution_clock::now();
@@ -329,13 +344,16 @@ void GameSimulator::simulateTurn()
 
 		delete player2_Action;
 	}
-	
 	//	collect resources
 	this->collectResources();
 
 	//	orbital missiles advance
 	_game.advanceOrbitalMissiles();
-
+	/*
+	std::cout << "\t1 2" << std::endl;
+	std::cout << "*Health\t" << _game.Player1.health()<< " " << _game.Player2.health()<< std::endl;
+	std::cout << "--------------" << std::endl;
+	*/
 }
 
 
@@ -344,7 +362,7 @@ void GameSimulator::play()
 	std::cout << "--------------------------------------------" << std::endl;
 	while (_game.Player1.isAlive() && _game.Player2.isAlive())
 	{
-		simulateTurn();
+		this->simulateTurn();
 	}
 
 
@@ -359,4 +377,12 @@ void GameSimulator::play()
 	else {
 		std::cout << " << It's a draw! >>" << std::endl;
 	}
+
+	_game.IsDone = true;
+}
+
+
+GameState* GameSimulator::getGameState()
+{
+	return &(this->_game);
 }

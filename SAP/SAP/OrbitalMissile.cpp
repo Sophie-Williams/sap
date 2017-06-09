@@ -39,3 +39,9 @@ bool OrbitalMissile::didHit(PlayerAgent player) const	//	returns true if player 
 		return false;
 	}
 }
+
+
+Point2D OrbitalMissile::getTarget() const
+{
+	return _target;
+}

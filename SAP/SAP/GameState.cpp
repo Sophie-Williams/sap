@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include <thread>
 
 
 
@@ -40,7 +41,7 @@ void GameState::moveMissiles()
 	unsigned int missileSpeed = config_ptr->Missile_Speed;
 	for (unsigned int i = 0; i < missileSpeed; i++)
 	{
-		for (auto missile : MissileList)
+		for (auto& missile : MissileList)
 		{
 			missile.move();
 		}
@@ -97,6 +98,8 @@ void GameState::moveMissiles()
 				it++;
 			}
 		}
+		using namespace std::chrono_literals;
+		std::this_thread::sleep_for(config_ptr->Graphics_WaitTime);
 	}
 }
 

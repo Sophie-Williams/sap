@@ -32,5 +32,6 @@ public:
 	~GameSimulator();
 
 	void play();
+	GameState* getGameState();
 };
 

@@ -1,4 +1,5 @@
 #include "Move.h"
+#include <thread>
 
 
 
@@ -84,6 +85,8 @@ void Move::executeAction(GameState& game, bool isPlayer1)
 					game.Player1.commitedSuicide();
 					std::cout << " -- Player1 dies outside play area." << std::endl;
 				}
+				using namespace std::chrono_literals;
+				std::this_thread::sleep_for(game.config_ptr->Graphics_WaitTime);
 			}
 		}
 	}
@@ -102,6 +105,8 @@ void Move::executeAction(GameState& game, bool isPlayer1)
 					game.Player2.commitedSuicide();
 					std::cout << " -- Player2 dies outside play area." << std::endl;
 				}
+				using namespace std::chrono_literals;
+				std::this_thread::sleep_for(game.config_ptr->Graphics_WaitTime);
 			}
 		}
 	}

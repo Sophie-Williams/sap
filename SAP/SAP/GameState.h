@@ -9,7 +9,7 @@ struct GameState
 {
 	GameState();
 	~GameState(); 
-	
+
 	void advanceOrbitalMissiles();
 	void moveMissiles();
 	void movePlayer1();
@@ -22,9 +22,10 @@ struct GameState
 	std::list<MovableObject> MissileList;
 	std::list<OrbitalMissile> OrbitalMissileList;
 
+	bool IsDone;
 	unsigned int Turn;
 	unsigned int Radius;
-
+	
 	const ConfigurableParameters* config_ptr;
 
 private:

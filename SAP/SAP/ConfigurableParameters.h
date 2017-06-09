@@ -34,5 +34,6 @@ struct ConfigurableParameters
 	unsigned int World_OrbitalMissileSpawnChance;
 
 	std::chrono::milliseconds Algorithm_ResponseTime;
+	std::chrono::milliseconds Graphics_WaitTime;
 };
 
