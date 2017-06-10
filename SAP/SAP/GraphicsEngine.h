@@ -22,16 +22,16 @@ namespace graphicsEngine
 	};
 
 	struct {
+		float Point_Size = 7;
 		float Circle_LineWidth = 2;
-		double Circle_ScaleFactor = 2.;
-		unsigned int Circle_MinRadius = 3;
+		double Circle_ScaleFactor = 1.;
 		unsigned int Circle_Resolution = 64;
-		RGB_Color Player1_Color = RGB_Color(0.f, 0.7f, 0.2f, 1.f);
-		RGB_Color Player2_Color = RGB_Color(0.f, 0.f, 1.f, 1.f);
+		RGB_Color Player1_Color = RGB_Color(0.f, 0.39f, 0.0f, 1.f);
+		RGB_Color Player2_Color = RGB_Color(0.f, 0.f, .8f, 1.f);
 		RGB_Color Missile_Color = RGB_Color(1.f, 0.f, 0.f, 1.f);
 		RGB_Color OrbitalMissile_Color = RGB_Color(1.f, 0.f, 0.f, 1.f);
 		RGB_Color PlayArea_Color = RGB_Color(1.f, 1.f, 1.f, 1.f);
-		RGB_Color Resource_Color_Gas = RGB_Color(0.f, 0.6f, 1.f, 1.f);
+		RGB_Color Resource_Color_Gas = RGB_Color(0.56f, 0.93f, 0.56f, 1.f);
 		RGB_Color Resource_Color_Missile = RGB_Color(1.f, 0.6f, 0.f, 1.f);
 		RGB_Color Resource_Color_OrbitalMissile = RGB_Color(0.7f, 0.f, 1.f, 1.f);
 		unsigned int refreshTime = 15;
@@ -110,9 +110,6 @@ namespace graphicsEngine
 
 	const double scaleRadius(const unsigned int& radius)
 	{
-		if (radius == 0) {
-			return 1.;
-		}
 		return static_cast<double>(radius) * parameters.Circle_ScaleFactor;
 	}
 	const Point2D scaleCoordinate(const Point2D& point)
@@ -159,6 +156,22 @@ namespace graphicsEngine
 		glPopMatrix();
 	}
 
+	void drawPoint(const Point2D& point, const RGB_Color& color)
+	{
+		const Point2D C = scaleCoordinate(point);
+
+		glPushMatrix();
+
+		glPointSize(parameters.Point_Size);
+
+		glBegin(GL_POINTS);
+		glColor4f(color.red, color.green, color.blue, color.alpha);
+		glVertex2f(static_cast<float> (C.X), static_cast<float> (C.Y));
+
+		glEnd();
+		glPopMatrix();
+	}
+
 	void drawPlayer1()
 	{
 		drawFilledCircle(game->Player1.getLocation(), game->Player1.getRadius(), parameters.Player1_Color);
@@ -193,13 +206,13 @@ namespace graphicsEngine
 		{
 			switch (x.second) {
 			case ResourceIndentifier::Gas:
-				drawFilledCircle(x.first, 0, parameters.Resource_Color_Gas);
+				drawPoint(x.first, parameters.Resource_Color_Gas);
 				break;
 			case ResourceIndentifier::Missile:
-				drawFilledCircle(x.first, 0, parameters.Resource_Color_Missile);
+				drawPoint(x.first, parameters.Resource_Color_Missile);
 				break;
 			case ResourceIndentifier::OrbitalMissile:
-				drawFilledCircle(x.first, 0, parameters.Resource_Color_OrbitalMissile);
+				drawPoint(x.first, parameters.Resource_Color_OrbitalMissile);
 				break;
 			}
 		}
